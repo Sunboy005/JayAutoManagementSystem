@@ -17,9 +17,8 @@ if(isset($_POST['addvehiclemaker'])){
     $_SESSION['alerticon']="success";
     $_SESSION['alert']="Vehicle Maker Added Successful";
   }else{
-    $_SESSION['alerticon']="success";
-    $_SESSION['alert']="Vehicle Maker Added Successful";
-      echo "<script>swal('Failed!', 'Vehicle Maker Addition failed', 'danger');</script>";
+    $_SESSION['alerticon']="danger";
+    $_SESSION['alert']="Vehicle Maker Failed to Add";
       die('Error: ' . mysqli_error($conn));
   }
 }
@@ -35,10 +34,12 @@ if (isset($_POST['updatevehiclemake'])){
   //check if the query is successful
   if (mysqli_query($conn,$sql))
   {
-      echo "<script>swal('Success!', 'Vehicle Maker Updated Successful', 'success');</script>";
+    $_SESSION['alerticon']="success";
+    $_SESSION['alert']="Vehicle Maker Updated Successful";
       header("Location:vehiclemake.php");
   }else{
-      echo "<script>swal('Failed!', 'Vehicle Maker Update Failed', 'danger');</script>";
+    $_SESSION['alerticon']="danger";
+    $_SESSION['alert']="Vehicle Maker Update Failed";
       die('Error: ' . mysqli_error($conn));
   }
 }
@@ -65,7 +66,8 @@ if (isset($_POST['updatevehiclemake'])){
 
         <!-- Main content -->
    <section class="content">
-       <div class="container-fluid">
+    <div class="container-fluid">
+        <?php include "../includes/pages/general/alert.php"; ?>
        <div class="row mr-4">
           <div class="col-sm-6">
             <div class="card">

@@ -1,28 +1,22 @@
- 
-          <!-- Bar chart -->
-          <div class="box box-success">
-            <div class="box-header with-border">
-              <h3 class="box-title">Car Sales BarChart</h3>
+<!-- BAR CHART -->
+<div class="card card-success">
+  <div class="card-header">
+    <h3 class="card-title">Bar Chart</h3>
 
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <div class="box-body">
-              <div class="chart">
-                <canvas id="barChart" style="height:230px"></canvas>
-              </div>
-            </div>
-            <div class="box-footer">
-				<span class="bg-blue"><i class="fa fa-square-o"></i></span> All Cars <br />
-				<span class="bg-green"><i class="fa fa-square-o"></i></span> Sold Cars
-			</div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-       
-		
-		
-		
+    <div class="card-tools">
+      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+        <i class="fas fa-minus"></i>
+      </button>
+      <button type="button" class="btn btn-tool" data-card-widget="remove">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="chart">
+      <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+    </div>
+  </div>
+  <!-- /.card-body -->
+</div>
+<!-- /.card -->

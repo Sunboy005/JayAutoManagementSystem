@@ -7,15 +7,13 @@ if(isset($_SESSION['user'])){
      $result=mysqli_query($conn,$sql);
      $row=mysqli_fetch_array($result);
      $myname=$row['name'];
+     $myid=$row['id'];
      $myemail=$row['email'];
-     $myimage=$row['image'];
-     if($myimage==""){
-          $myimage="avatar.png";
-     }
+     $myimage="avatar.png";
      $mypassword=$row['password'];
      $myposition_id=$row['position_id'];
      $datejoined=$row['date_created'];
 }else{
    
-     header("Location: ../login.php");
+     header("Location: ../index.php");
 }

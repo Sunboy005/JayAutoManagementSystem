@@ -1,7 +1,8 @@
+  
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="../index3.html" class="brand-link">
-      <img src="../dist/img/jayauto.png" alt="Jay Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <a href="../index.php" class="brand-link">
+      <img src="../dist/img/logo.png" alt="Jay Logo" class="brand-image" style="opacity: .8">
       <span class="brand-text font-weight-light">Jay Auto Sales</span>
     </a>
 
@@ -34,18 +35,18 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-               <?php if ($myposition_id==1){?>
-                <li class="nav-item">
-                  <a href="../admin/dashboard.php" class="nav-link">
+               <li class="nav-item">
+                  <a href="../general/dashboard.php" class="nav-link">
                     <i class="nav-icon fas fa-tachometer-alt"></i>
                     <p>
                       Dashboard
-                      <i class="right fas fa-angle-left"></i>
                     </p>
                   </a>
                 </li>
+                
+               <?php if ($myposition_id==1){?>
                 <li class="nav-item">
-                  <a href="../admin/employeelist.php" class="nav-link">
+                  <a href="../admin/employees.php" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
                     <p>
                       Employee Management
@@ -75,39 +76,21 @@
                     </li>
               </li>
             </ul>
-          </li>
-          
-               <?php }else{?>
-          <li class="nav-item">
-            <a href="dashboard.php" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-              </p>
-            </a>
-          </li>
-          <?php }?>
+          </li>          
+        <?php }?>
           <li class="nav-header">Vehicle Store</li>
           <li class="nav-item">
-            <a href="../general/store.php" class="nav-link">
-              <i class="nav-icon fas fa-institution"></i>
+            <a href="../general/storerecord.php" class="nav-link">
+              <i class="nav-icon fas fa-store-alt"></i>
               <p>In-Store Vehicle List
               </p>
             </a>
           </li>
           <li class="nav-item">
             <a href="../general/salesrecord.php" class="nav-link">
-              <i class="nav-icon fas fa-records"></i>
+              <i class="nav-icon fas fa-shopping-cart"></i>
               <p>Vehicle Sales List
               </p>
-            </a>
-          </li>
-          
-          <li class="nav-header">PERSONAL</li>
-          <li class="nav-item">
-            <a href="../general/profile.php" class="nav-link">
-              <i class="nav-icon fas fa-ellipsis-h"></i>
-              <p>My Profile</p>
             </a>
           </li>
          </ul>

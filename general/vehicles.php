@@ -8,10 +8,12 @@ include "../includes/pages/general/head-top.php";
 if(isset($_GET['del'])){
 	$query=mysqli_query($conn,"DELETE FROM  vehicle WHERE id = '".$_GET['id']."'");
   if($query){
-    echo "<script>swal('Success!', 'Vehicle deleted successfully', 'success');</script>";
+    $_SESSION['alerticon']="success";
+    $_SESSION['alert']="Vehicle Deleted Successful";
     header("Location:vehicles.php");
   }else{
-    $_SESSION['msg'] = "Query failed to delete";
+    $_SESSION['alerticon']="success";
+    $_SESSION['alert']="Vehicle Failed to delete";
     echo "<script>swal('Failed!', 'Vehicle failed to delete', 'danger');</script>";
   } 		
 }
@@ -29,10 +31,12 @@ if(isset($_POST['addvehicle'])){
   //check if the query is successful
   if (mysqli_query($conn,$sql))
   {
-      echo "<script>swal('Success!', 'User registration successful', 'success');</script>";
+    $_SESSION['alerticon']="success";
+    $_SESSION['alert']="Vehicle  Added Successful";
       header("Location: vehicles.php");
   }else{
-      echo "<script>swal('Failed!', 'User registration failed', 'danger');</script>";
+    $_SESSION['alerticon']="danger";
+    $_SESSION['alert']="Vehicle Failed to add";
       die('Error: ' . mysqli_error($conn));
   }
 }
@@ -58,20 +62,16 @@ if (isset($_POST['updatevehicle'])){
   }
 }
 ?>
+ 
  <!-- DataTables -->
-<link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-<link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-<?php
-  include "../includes/connections/counts.php";
-?>
+ <?php include '../includes/pages/general/table-css.php'; ?>
 
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-  <!-- Navbar -->
-  <?php include "../includes/pages/general/navigation.php";?>
+ <!-- Navbar -->
+ <?php include "../includes/pages/general/navigation.php";?>
   <!-- Main Sidebar Container -->
-  
+
   <?php include "../includes/pages/general/sidebar.php";?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -81,11 +81,87 @@ if (isset($_POST['updatevehicle'])){
         <!-- Main content -->
    <section class="content">
        <div class="container-fluid">
+          <?php include "../includes/pages/general/alert.php"; ?>
        <div class="row mr-4">
-          <div class="col-sm-6">
+          <div class="col-sm-3">
+            <?php 
+          if(isset($_GET['id'])){
+            $id = intval($_GET['id']);
+            $dn = mysqli_query($conn,'SELECT * from vehicle WHERE id="'.$id.'"');
+            while($row =mysqli_fetch_array($dn)) {
+               $vehiclename = $row['name'];
+              }
+            ?>
+
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Update Vehicle</h3>
+                <h3 class="card-title text-center">Edit <?php echo  $vehiclename?></h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <form action="vehicles.php?id=<?php echo $id;?>" method="post">
+                  <div class="input-group mb-3">
+                    <input type="text" name="name" class="form-control"value="<?php echo $vehiclename?>">
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-car"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <select name="category" class="form-control">
+                      <option  disabled selected>Vehicle Category</option>
+                      <?php
+                      $sql ="SELECT * FROM category";
+                      $result = mysqli_query($conn, $sql);
+                      while($row = mysqli_fetch_array($result)){
+                      ?>
+                      <option value="<?php echo $row['id']; ?>" >
+                      <?php echo $row['title']; ?>
+                      </option>
+                      <?php } ?>  
+                    </select>
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-list"></span>
+                      </div>
+                    </div>
+                  </div><div class="input-group mb-3">
+                    <select name="make" class="form-control">
+                      <option  disabled selected>Car Maker</option>
+                      <?php
+                      $sql ="SELECT * FROM carmake";
+                      $result = mysqli_query($conn, $sql);
+                      while($row = mysqli_fetch_array($result)){
+                      ?>
+                      <option value="<?php echo $row['id']; ?>" >
+                      <?php echo $row['title']; ?>
+                      </option>
+                      <?php } ?>  
+                    </select>
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-car"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-2">
+                      
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-8">
+                      <button type="submit" name="updatevehicle" class="btn btn-primary btn-block"><small><i class="fas fa-update"></i></small><i class="fas fa-car"></i> Update Vehicle</button>
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                </form>
+              </div>
+            </div>
+            <?php }else{?>
+              <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Add Vehicle</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -136,11 +212,11 @@ if (isset($_POST['updatevehicle'])){
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-4">
+                    <div class="col-2">
                       
                     </div>
                     <!-- /.col -->
-                    <div class="col-6">
+                    <div class="col-8">
                       <button type="submit" name="addvehicle" class="btn btn-primary btn-block"><small><i class="fas fa-plus"></i></small><i class="fas fa-car"></i> Add Vehicle</button>
                     </div>
                     <!-- /.col -->
@@ -148,83 +224,9 @@ if (isset($_POST['updatevehicle'])){
                 </form>
               </div>
             </div>
-            <?php 
-          if(isset($_GET['id'])){
-            $id = intval($_GET['id']);
-            $dn = mysqli_query($conn,'SELECT * from vehicle WHERE id="'.$id.'"');
-            while($row =mysqli_fetch_array($dn)) {
-               $vehiclename = $row['name'];
-              }
-            ?>
-
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title text-center">Edit <?php echo  $vehiclename?></h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <form action="vehicles.php?id=<?php echo $id;?>" method="post">
-                  <div class="input-group mb-3">
-                    <input type="text" name="name" class="form-control"value="<?php echo $vehiclename?>">
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fas fa-car"></span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="input-group mb-3">
-                    <select name="category" class="form-control">
-                      <option  disabled selected>Vehicle Category</option>
-                      <?php
-                      $sql ="SELECT * FROM category";
-                      $result = mysqli_query($conn, $sql);
-                      while($row = mysqli_fetch_array($result)){
-                      ?>
-                      <option value="<?php echo $row['id']; ?>" >
-                      <?php echo $row['title']; ?>
-                      </option>
-                      <?php } ?>  
-                    </select>
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fas fa-database"></span>
-                      </div>
-                    </div>
-                  </div><div class="input-group mb-3">
-                    <select name="make" class="form-control">
-                      <option  disabled selected>Car Maker</option>
-                      <?php
-                      $sql ="SELECT * FROM carmake";
-                      $result = mysqli_query($conn, $sql);
-                      while($row = mysqli_fetch_array($result)){
-                      ?>
-                      <option value="<?php echo $row['id']; ?>" >
-                      <?php echo $row['title']; ?>
-                      </option>
-                      <?php } ?>  
-                    </select>
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fas fa-car"></span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-4">
-                      
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-6">
-                      <button type="submit" name="updatevehicle" class="btn btn-primary btn-block"><small><i class="fas fa-update"></i></small><i class="fas fa-car"></i> Update Vehicle</button>
-                    </div>
-                    <!-- /.col -->
-                  </div>
-                </form>
-              </div>
-            </div>
-            <?php }?>
+          <?php }?>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-9">
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Vehicle Maker List</h3>
@@ -304,10 +306,10 @@ if (isset($_POST['updatevehicle'])){
    <?php include '../includes/pages/general/scrolltotop.php'; ?>
   </div>
   <!-- /.content-wrapper -->
-  <?php include '../includes/pages/general/footer.php'; ?>
+    <!-- /.content-wrapper -->
+    <?php include '../includes/pages/general/footer.php'; ?>
   <?php include '../includes/pages/general/footer-script.php'; ?>
-  <!-- Page Custom Scripts -->
-
+  <?php include '../includes/pages/general/table-script.php'; ?>
 <!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
+<script src="../dist/js/adminlte.min.js"></script>  <!-- Page Custom Scripts -->
+  <!-- Page Custom Scripts -->

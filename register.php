@@ -7,19 +7,21 @@ if(isset($_POST['registerAdmin'])){
     $password=$_POST["password"];
     $salt = '5rte43dfghyt678'.$password;
     $hashed= md5($salt);            
-    $date=date("Y-m-d h:i:s");
+    $date=date("Y-m-d H:i:s");
 
     //Set the foreign key checks to 0
     $fk_set=mysqli_query($conn,"SET FOREIGN_KEY_CHECKS=0;");
     //Insert the user
-    $sql="INSERT INTO users (name, email, password, date_created) VALUES ('$name','$email','$hashed_password','$date')";
+    $sql="INSERT INTO users (name, email, password, position_id, date_created) VALUES ('$name','$email','$hashed_password', 1,'$date')";
     //check if the query is successful
     if (mysqli_query($conn,$sql))
     {
-        echo "<script>swal('Success!', 'User registration successful', 'success');</script>";
+      $_SESSION['alerticon'] ='success';
+      $_SESSION['alert'] ='Admin Registered successfully';
         header("Location: index.php");
     }else{
-        echo "<script>swal('Failed!', 'User registration failed', 'danger');</script>";
+      $_SESSION['alerticon'] ='success';
+      $_SESSION['alert'] ='Admin Failed to register.';
         die('Error: ' . mysqli_error($conn));
     }
 }

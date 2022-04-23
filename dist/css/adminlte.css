@@ -433,6 +433,9 @@ small,
   font-size: 80%;
   font-weight: 400;
 }
+.no-list{
+  list-style: none;
+}
 
 mark,
 .mark {

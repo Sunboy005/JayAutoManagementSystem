@@ -7,10 +7,10 @@ if($host=="localhost"){
 	$password="";
 	$database="jayautodb";
 }else{
-	// $server="sql111.byethost7.com";
-    // $username="b7_31414188";
-    // $password="SubJect123";
-    // $database="b7_31414188_msme_db";
+	$server="sql308.byethost14.com";
+    $username="b14_31565096";
+    $password="SubJect";
+    $database="b14_31565096_jayautos_db";
 }
 	
     // this will avoid mysql_connect() deprecation error.
